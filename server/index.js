@@ -11,11 +11,11 @@ const app = express()
 
 dotenv.config()
 
-app.use('/posts', postsRoutes)
-
 app.use(bodyParser.json({ limit: '30mb', extended: true }))
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
+
+app.use('/posts', postsRoutes)
 
 //Set up database within a mongoDB instance
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true})
