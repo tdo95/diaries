@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import reducers from './reducers'
 
 import App from './App'
-
+import './index.css'
 //thunk allows us to perform asynchronous actions in redux
 const store = createStore(reducers, compose(applyMiddleware(thunk)))
 
