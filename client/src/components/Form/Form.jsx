@@ -32,6 +32,8 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(null)
     setPostData({creator: '', title: '', message: '', tags: '', selectedFile: '',})
+    //clear upload
+    document.querySelector('#inputContainer input').value = ''
   }
 
   return (
@@ -70,11 +72,10 @@ const Form = ({ currentId, setCurrentId }) => {
           value={postData.tags}
           onChange={(e) => setPostData({...postData, tags: e.target.value})}
         />
-        <Box className={classes.fileInput}>
+        <Box className={classes.fileInput} id={'inputContainer'}>
           <FileBase
-            type='file'
             multiple={false}
-            onDone={(base64) => setPostData({...postData, selectedFile: base64})}
+            onDone={(base64) => setPostData({...postData, selectedFile: base64})}       
           />
         </Box>
         <Button className={classes.buttonStyle} variant='contained' size='large' type='submit' fullWidth>Submit</Button>
