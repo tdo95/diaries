@@ -24,11 +24,16 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    if (currentId) dispatch(updatePost(currentId, postData))
-    else dispatch(createPost(postData))
+    //filter out empty tags before submitting
+    const filteredTags = postData.tags.filter(tag => !!tag)
+
+    if (currentId) dispatch(updatePost(currentId, {...postData, tags: filteredTags}))
+    else dispatch(createPost({...postData, tags: filteredTags}))
 
     clear()
   }
+
+  
   const clear = () => {
     setCurrentId(null)
     setPostData({creator: '', title: '', message: '', tags: '', selectedFile: '',})
@@ -70,7 +75,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label='Tags'
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({...postData, tags: e.target.value})}
+          onChange={(e) => setPostData({...postData, tags: e.target.value.replace(' ', '').split(',')})}
         />
         <Box className={classes.fileInput} id={'inputContainer'}>
           <FileBase
