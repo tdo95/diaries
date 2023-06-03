@@ -8,7 +8,7 @@ import moment from 'moment'
 
 import useStyles from './styles'
 import { useDispatch } from 'react-redux'
-import { deletePost } from '../../../actions/posts';
+import { deletePost, likePost } from '../../../actions/posts';
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles()
@@ -32,9 +32,9 @@ const Post = ({ post, setCurrentId }) => {
       <Typography className={classes.title} variant='h5' gutterBottom>{post.title}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size='small' style={{color: 'black'}} onClick={() => {}}>
+        <Button size='small' style={{color: 'black'}} onClick={() => dispatch(likePost(post._id))}>
           <FavoriteBorderIcon fontSize='small'/>
-            Like 
+            &nbsp; Like &nbsp; 
             {post.likeCount}
         </Button>
         <Button size='small' style={{color: 'black'}} onClick={() => dispatch(deletePost(post._id))}>
