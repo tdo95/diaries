@@ -22,4 +22,9 @@ export default makeStyles((theme) => ({
       borderRadius: '50px',
       marginRight: '15px'
     },
+    [theme.breakpoints.down('sm')]: {
+      mainContainer: {
+        flexDirection: 'column-reverse'
+      }
+    }
 }))
