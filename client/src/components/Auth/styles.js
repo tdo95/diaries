@@ -29,4 +29,13 @@ export default makeStyles((theme) => ({
       googleButton: {
         marginBottom: theme.spacing(2),
       },
+      button: {
+        color: grey[900],
+        textDecoration: 'underline',
+      },
+      googleAuthBox: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '24px'
+      }
 }))
