@@ -5,24 +5,34 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from '@react-oauth/google';
 import { useDispatch } from 'react-redux'
 import jwt_decode from 'jwt-decode'
+import { signin, signup } from '../../actions/auth'
 
 import Input from './Input';
 
 import useStyles from './styles'
 
+const initialState = {firstName: '', lasName: '', email: '', password: '', confirmPassword: ''}
+
 const Auth = () => {
     const [isSignup, setIsSignup] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+    const [formData, setFormData] = useState(initialState)
     const classes = useStyles()
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (isSignup) {
+            dispatch(signup(formData, history))
+        } else {
+            dispatch(signin(formData, history))
+        }
 
     }
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        setFormData({...formData, [e.target.name]: e.target.value})
     }
     const googleSuccess = (res) => {
         const decoded = jwt_decode(res.credential)
@@ -70,14 +80,14 @@ const Auth = () => {
                                     <Input
                                         name='firstName'
                                         label='First Name'
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         halfWidth
                                         autoFocus
                                     />
                                     <Input
                                         name='lastName'
                                         label='Last Name'
-                                        onChange={handleChange}
+                                        handleChange={handleChange}
                                         halfWidth
                                     />
                                 </>
@@ -85,13 +95,13 @@ const Auth = () => {
                             <Input
                                 name='email'
                                 label='Email'
-                                onChange={handleChange}
+                                handleChange={handleChange}
                                 type='email'
                             />
                             <Input
                                 name='password'
                                 label='Password'
-                                onChange={handleChange}
+                                handleChange={handleChange}
                                 type={showPassword ? 'text' : 'password'}
                                 handleShowPassword={handleShowPassword}
                             />

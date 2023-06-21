@@ -7,6 +7,7 @@ import * as dotenv from 'dotenv'
 dotenv.config()
 
 import postsRoutes from './routes/posts.js'
+import userRoutes from './routes/user.js'
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(cors())
 app.use(logger('dev'))
 
 app.use('/posts', postsRoutes)
+app.use('/user', userRoutes)
 
 //Set up database within a mongoDB instance
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true})
