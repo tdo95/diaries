@@ -11,7 +11,7 @@ import Input from './Input';
 
 import useStyles from './styles'
 
-const initialState = {firstName: '', lasName: '', email: '', password: '', confirmPassword: ''}
+const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
 
 const Auth = () => {
     const [isSignup, setIsSignup] = useState(false)
@@ -24,6 +24,7 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log(formData)
         if (isSignup) {
             dispatch(signup(formData, history))
         } else {
@@ -32,6 +33,7 @@ const Auth = () => {
 
     }
     const handleChange = (e) => {
+        console.log(e.target.name, e.target.value)
         setFormData({...formData, [e.target.name]: e.target.value})
     }
     const googleSuccess = (res) => {
@@ -109,7 +111,7 @@ const Auth = () => {
                                 <Input
                                     name='confirmPassword'
                                     label='Confirm Password'
-                                    onChange={handleChange}
+                                    handleChange={handleChange}
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     handleShowPassword={handleShowConfirmPassword}
                                 />
