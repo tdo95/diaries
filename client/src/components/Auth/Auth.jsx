@@ -1,7 +1,10 @@
 import { React, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Avatar, Button, Paper, Grid, Typography, Container, Box} from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { GoogleLogin } from '@react-oauth/google';
+import { useDispatch } from 'react-redux'
+import jwt_decode from 'jwt-decode'
 
 import Input from './Input';
 
@@ -12,6 +15,8 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const classes = useStyles()
+    const dispatch = useDispatch()
+    const history = useHistory()
 
     const handleSubmit = () => {
 
@@ -20,7 +25,23 @@ const Auth = () => {
 
     }
     const googleSuccess = (res) => {
-        console.log('SUCCESSFUL GOOGLE LOGIN', res)
+        const decoded = jwt_decode(res.credential)
+        const { name, picture, sub, email, jti } = decoded
+        console.log(decoded)
+        const user =  {
+            _id: sub,
+            name: name,
+            image: picture,
+            email: email,
+            token: jti,
+        }
+
+        try {
+            dispatch({type: 'AUTH', data: user})
+            history.push('/')
+        } catch (error){
+            console.log(error)
+        }
 
     }
     const googleFailure = () => {
